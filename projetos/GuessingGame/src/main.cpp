@@ -37,6 +37,10 @@
 // biblioteca de algoritmos úteis, como os de pesquisa, ordenação,
 // transformação e etc.
 
+#include <limits>
+// biblioteca de limites referentes aos tipos, como valor máximo de um int, double, etc
+// neste código é mais usado na função clean para limpar o stdin de entrada inválidas
+
 using namespace std;
 // como vou me limitar as funções providas pela stdlib,
 // limitar o namespace ao std é uma boa para escrever mais
@@ -48,7 +52,7 @@ using namespace std;
 // através do uso de diretivas de pré processamento para determinar
 // o sistema operacional no qual o sistema é utilizado
 
-void limparTela (void) {
+void clear (void) {
 #ifdef _WIN32
     system("cls");
 #elif __APPLE__
@@ -143,4 +147,11 @@ string trim (const string& word ) {
     // substr: cria e retorna uma nova string que começa em 'start'
     // e tem tamanho 'end - start + 1' (+ 1 para incluir o caractere encontrado pelo método, porque se não,
     // o ultimo caracter válido seria rifado, o que não é desejável)
+}
+
+// com tudo que há no código, clear, dormir e trim, vamos tratar o buffer de entrada
+
+void cin_clean (void){
+    cin.clear(); // limpa erro
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // limpa buffer
 }
