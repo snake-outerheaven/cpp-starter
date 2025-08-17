@@ -26,8 +26,6 @@ cpp-starter/
 └── README.md           # este arquivo
 ```
 
-> Observação: não versionar binários nem artefatos de build.
-
 ---
 
 ## Regras do repositório
