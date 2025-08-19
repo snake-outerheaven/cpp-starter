@@ -3,27 +3,20 @@
 // o que eu mais vou usar: std::cin, std::cout e std::cerr
 
 #include <iomanip>
-// biblioteca padrão para manipulação de streams, sendo útil
-// para controlar o número de casas decimais de um número
-// exibido no texto, por ex ( std::cout << std::fixed << std::setprecision(2) <<
-// var << std::endl; )
+// biblioteca essencial para manipulação de streams
 
-#include <iterator>
 #include <string>
 // biblioteca que introduz o objeto String
 // e diversos métodos úteis para facilitar
 // o manejamento de texto.
 
+#include <sstream>
+// me permite tratar strings como arquivos.
+
 #include <cstdlib>
 // não há muito o que falar, este é um include essencial
 // para usar funções da stdlib de C em C++, sendo essencial
 // para poder usar rand, srand, system e outras funções.
-
-#include <ctime>
-// bibiioteca que me permite incluir implementações da biblioteca
-// time de C, sendo usada aqui pela função time, que vai retornar
-// o número de segundos decorridos desde 1970 ( não sei por quais motivos )
-// mas é a forma perfeita de obter a semente do números aleatórios.
 
 #include <thread>
 // biblioteca de C++ que adiciona o objeto Thread, me permitindo controlar
@@ -35,19 +28,25 @@
 // biblioteca de C++ que adiciona diversos tipos relacionados ao tempo
 // (segundos, horas, e outras abstrações)
 
-#include <algorithm>
-// biblioteca de algoritmos úteis, como os de pesquisa, ordenação,
-// transformação e etc.
+#include <fstream>
+// manipulação de arquivos: ofstream (escrita) e ifstream (leitura)
 
-#include <limits>
-// biblioteca de limites referentes aos tipos, como valor máximo de um int,
-// double, etc neste código é mais usado na função clean para limpar o stdin de
-// entrada inválidas
+#include <filesystem>
+// manipulação do sistema de arquivos: criar diretórios, listar arquivos...
+
+#include <tuple>
+// tuplas são grupos de variáveis de diferentes tipos sobre um nome,
+
+#include <random>
+// biblioteca com funções e tipos úteis sobre números aleatórios.
 
 using namespace std;
 // como vou me limitar as funções providas pela stdlib,
 // limitar o namespace ao std é uma boa para escrever mais
 // facilmente o código.
+
+namespace fs = std::filesystem;
+// setando um namespace para escrever menos.
 
 // área das funções
 
@@ -91,7 +90,7 @@ string trim(const string &word) {
   // sei que não é a forma mais adequada para um iniciante, mas acho
   // melhor quebrar logo a cabeça para o conhecimento entrar.
 
-  const auto start = word.find_first_not_of(" \n\t\r\b");
+  auto start = word.find_first_not_of(" \n\t\r\b");
   if (start == string::npos)
     return "";
 
@@ -155,20 +154,15 @@ string trim(const string &word) {
   // não é desejável)
 }
 
-// com tudo que há no código, clear, dormir e trim, vamos tratar o buffer de
-// entrada
-
-void cin_clean(void) {
-  cin.clear();                                         // limpa erro
-  cin.ignore(numeric_limits<streamsize>::max(), '\n'); // limpa buffer
-}
-
+// função responsável por obter o nome do usuário.
 string obter_nome(void) {
   dormir(750);
-  string resposta;
-  string nome;
+  string resposta{};
+  string nome{};
 
   while (true) {
+
+    nome.clear();
 
     cout << "Este programa precisa do seu nome de usuário,"
          << " por favor, digite-o abaixo! \n"
@@ -178,26 +172,24 @@ string obter_nome(void) {
     nome = trim(nome);
 
     if (nome.empty()) {
-      cin_clean();
       dormir(500);
       cout << "Nome vazio detectado!" << endl;
       cout << "Digite novamente: ";
       continue;
 
     } else {
-
-      cout << "Voce confirma " << nome << " como seu nome de usuário? (S/n)"
+      cout << endl;
+      cout << "Voce confirma " << nome << " como seu nome de usuário? (s/n)"
            << endl;
       getline(cin, resposta);
 
-      if (resposta == "S") {
-
-        dormir(550);
-
-        cout << "Certo!" << nome << " confirmado!" << endl;
+      if (resposta == "s") {
+        dormir(750);
+        cout << "Certo! " << nome << " confirmado!" << endl;
+        dormir(500);
         return nome;
 
-      } else if (resposta == "N") {
+      } else if (resposta == "n") {
         dormir(550);
         cout << "Certo, aguarde para digitar o seu nome de usuário novamente..."
              << endl;
@@ -206,8 +198,9 @@ string obter_nome(void) {
         continue;
       } else {
         dormir(250);
-        cout << "Por favor, digite S ou N! Reiniciando função por segurança..."
+        cout << "Por favor, digite s ou s! Reiniciando função por segurança..."
              << endl;
+        dormir(400);
         clear();
         continue;
       }
@@ -215,12 +208,134 @@ string obter_nome(void) {
   }
 }
 
-int main(void) {
-  string usuario;
+// função que gera uma tupla de valores, que será desestrututrada na função
+// principal.
+tuple<unsigned int, unsigned int> game(string user) {
+  mt19937_64 mt{static_cast<unsigned long long>(
+      chrono::high_resolution_clock::now().time_since_epoch().count())};
+  // gerador de "números aleatórios" usando Mersenne Twister
+  // static cast<type> é a forma
+  uniform_int_distribution<> roll{1, 100};
+  // abstração para representar uma
+  // distribuição de numeros de 1 a 100
 
-  clear();
+  unsigned int rand_num = roll(mt);
+  unsigned int tries{0};
+  unsigned int guess_int{};
+  string guess{};
+  string resposta{};
+
   dormir(750);
-  cout << "Bem vindo ao jogo da advinhação!" << endl;
-  usuario = obter_nome();
-  cout << "Nome do usuário é: " << usuario << "." << endl; // debug, função é ok
+  cout << "Certo " << user << ", vamos iniciar o jogo." << endl;
+
+  while (true) {
+    tries++;
+    guess.clear();
+    cout << "O número secreto está entre 1 a 100" << endl;
+    cout << "Por favor, " << user << ", digite o seu palpite.\n: ";
+    getline(cin, guess);
+    guess = trim(guess);
+    dormir(750);
+    try {
+      cout << "Interpretando número..." << endl;
+      dormir(750);
+      guess_int = stoi(guess);
+    } catch (...) {
+      cout << "Oops, digite um número entre 1 e 100 " << user << "." << endl;
+      clear();
+      continue;
+    }
+    if (guess_int == rand_num) {
+      cout << "Parabéns, voce descobriu o número secreto com " << tries
+           << " tentativas." << endl;
+      return make_tuple(rand_num, tries);
+    } else if (guess_int < rand_num && guess_int >= 1) {
+      cout << guess_int << " é menor que o número secreto!" << endl;
+      dormir(750);
+      continue;
+    } else if (guess_int > rand_num && guess_int <= 100) {
+      cout << guess_int << " é maior que o número secreto!" << endl;
+      dormir(750);
+      continue;
+    } else {
+      cout << "Número fora do intervalo!" << endl;
+      dormir(250);
+      continue;
+    }
+  }
+}
+
+// função que busca salvar o progresso do jogador
+void save(const string &user, unsigned int &a, unsigned int &b) {
+  cout << "Iniciando função de salvamento..." << endl;
+  dormir(1250);
+
+  fs::path log_dir{"log"};
+
+  if (!fs::exists(log_dir)) {
+    try {
+      cout << "Pasta de logs não localizada! Criando uma nova..." << endl;
+      dormir(750);
+      fs::create_directory(log_dir);
+    } catch (...) {
+      dormir(750);
+      cout << "Não foi possível criar a pasta de logs, veja suas permissões no "
+              "sistema."
+           << endl;
+      return;
+    }
+  }
+
+  fs::path log_txt{log_dir /
+                   "game_log.txt"}; // funciona multiplataforma, mas no código é
+                                    // escrito como se fosse em um sistema UNIX
+
+  ostringstream log_flow;
+
+  auto now = chrono::system_clock::now();
+
+  auto time = chrono::system_clock::to_time_t(now);
+
+  log_flow << "Data do registro: "
+           << put_time(localtime(&time), "%d/%m/%Y - %H:%M:%S") << "\n"
+           << "Nome de usuário: " << user << " | Número secreto: " << a
+           << " | Número de tentativas: " << b << "\n";
+
+  string log_string = log_flow.str();
+
+  ofstream log_file(log_txt, ios::app);
+
+  try {
+    dormir(750);
+    log_file << log_string;
+    dormir(500);
+    log_file.close();
+    cout << "Dados salvos!" << endl;
+  } catch (...) {
+    cout << "Não foi possível salvar por algum motivo..." << endl;
+    dormir(250);
+    cout << "Encerrando..." << endl;
+    dormir(500);
+    return;
+  }
+
+  dormir(400);
+  cout << "Exibindo ultimas partidas:" << endl;
+  ifstream log_outp(log_txt);
+  string linha;
+  while (getline(log_outp, linha)) {
+    cout << linha << endl;
+  }
+  log_outp.close();
+}
+
+int main() {
+  clear();
+  cout << "Bem vindo ao jogo da adivinhação! Vamos jogar!" << endl;
+  string user = obter_nome();
+  dormir(750);
+  clear();
+  auto [rand_num, tries] = game(user); // forma recomendada de desmontar uma tupla.
+  save(user, rand_num, tries);
+  return 0;
 }
