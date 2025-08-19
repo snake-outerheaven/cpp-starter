@@ -187,6 +187,36 @@ string obter_nome(void) {
         dormir(750);
         cout << "Certo! " << nome << " confirmado!" << endl;
         dormir(500);
+
+        fs::path log_dir{"log"};
+        fs::path log_file{log_dir / "game_log.txt"};
+
+        if (!(fs::exists(log_file))) {
+          dormir(750);
+          cout << "Não foi possível verificar se este nome de usuário já foi "
+                  "usado..."
+               << endl;
+          return nome;
+        }
+
+        ifstream log_read{log_file};
+        string buscador{};
+        unsigned int vezes{0};
+
+        while (getline(log_read, buscador)) {
+          buscador = trim(buscador);
+          if (buscador.find(nome) != string::npos) {
+            vezes++;
+          }
+        }
+
+        if (vezes > 0) {
+          cout << "Bem vindo novamente " << nome << ", você jogou este jogo "
+               << vezes << "X." << endl;
+        } else {
+          cout << "Bem vindo novo jogador!" << endl;
+        }
+
         return nome;
 
       } else if (resposta == "n") {
@@ -334,8 +364,8 @@ int main() {
   cout << "Bem vindo ao jogo da adivinhação! Vamos jogar!" << endl;
   string user = obter_nome();
   dormir(750);
-  clear();
-  auto [rand_num, tries] = game(user); // forma recomendada de desmontar uma tupla.
+  auto [rand_num, tries] =
+      game(user); // forma recomendada de desmontar uma tupla.
   save(user, rand_num, tries);
   return 0;
 }

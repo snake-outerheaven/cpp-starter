@@ -2,3 +2,7 @@ Data do registro: 19/08/2025 - 03:35:18
 Nome de usuário: neneo | Número secreto: 93 | Número de tentativas: 6
 Data do registro: 19/08/2025 - 11:13:00
 Nome de usuário: Mako | Número secreto: 86 | Número de tentativas: 10
+Data do registro: 19/08/2025 - 12:03:20
+Nome de usuário: Mako | Número secreto: 14 | Número de tentativas: 13
+Data do registro: 19/08/2025 - 12:33:46
+Nome de usuário: Mako | Número secreto: 78 | Número de tentativas: 3
