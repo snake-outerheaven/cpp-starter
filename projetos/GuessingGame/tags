@@ -37,9 +37,10 @@
 !_TAG_ROLE_DESCRIPTION!C++!header	local	/local header/
 !_TAG_ROLE_DESCRIPTION!C++!header	system	/system header/
 !_TAG_ROLE_DESCRIPTION!C++!macro	undef	/undefined/
-cin_clean	src/main.cpp	/^void cin_clean(void) {$/;"	f	typeref:typename:void
 clear	src/main.cpp	/^void clear(void) {$/;"	f	typeref:typename:void
 dormir	src/main.cpp	/^void dormir(int tempo) { this_thread::sleep_for(chrono::milliseconds(tempo)); }$/;"	f	typeref:typename:void
-main	src/main.cpp	/^int main (void) {$/;"	f	typeref:typename:int
+game	src/main.cpp	/^tuple<unsigned int, unsigned int> game(string user) {$/;"	f	typeref:typename:tuple<unsigned int,unsigned int>
+main	src/main.cpp	/^int main() {$/;"	f	typeref:typename:int
 obter_nome	src/main.cpp	/^string obter_nome(void) {$/;"	f	typeref:typename:string
+save	src/main.cpp	/^void save(const string &user, unsigned int &a, unsigned int &b) {$/;"	f	typeref:typename:void
 trim	src/main.cpp	/^string trim(const string &word) {$/;"	f	typeref:typename:string
