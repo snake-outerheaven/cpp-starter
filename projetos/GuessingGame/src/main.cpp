@@ -320,7 +320,7 @@ void save(const string &user, unsigned int &a, unsigned int &b) {
                    "game_log.txt"}; // funciona multiplataforma, mas no código é
                                     // escrito como se fosse em um sistema UNIX
 
-  ostringstream log_flow;
+  ostringstream log_flow{}; // inicialização segura
 
   auto now = chrono::system_clock::now();
 
@@ -352,9 +352,9 @@ void save(const string &user, unsigned int &a, unsigned int &b) {
   dormir(400);
   cout << "Exibindo ultimas partidas:" << endl;
   ifstream log_outp(log_txt);
-  string linha;
-  while (getline(log_outp, linha)) {
-    cout << linha << endl;
+  string leitor{}; // inicialização segura
+  while (getline(log_outp, leitor)) {
+    cout << leitor << endl;
   }
   log_outp.close();
 }
