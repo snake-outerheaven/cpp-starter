@@ -6,3 +6,9 @@ Data do registro: 19/08/2025 - 12:03:20
 Nome de usuário: Mako | Número secreto: 14 | Número de tentativas: 13
 Data do registro: 19/08/2025 - 12:33:46
 Nome de usuário: Mako | Número secreto: 78 | Número de tentativas: 3
+Data do registro: 24/08/2025 - 10:22:21
+Nome de usuário: Betinha | Número secreto: 73 | Número de tentativas: 12
+Data do registro: 24/08/2025 - 10:24:13
+Nome de usuário: Betinha | Número secreto: 88 | Número de tentativas: 6
+Data do registro: 24/08/2025 - 10:25:32
+Nome de usuário: Betinha | Número secreto: 14 | Número de tentativas: 9
