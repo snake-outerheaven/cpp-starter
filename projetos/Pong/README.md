@@ -39,8 +39,7 @@ Em um sistema com make disponível, além do simples make que faz a compilação
 ```
   make clean
 ```
-**Este fará a limpeza do ambiente do projeto, removendo as pastas bin/ e build/,
-  deixando apenas as partes de código fonte. **
+**Este fará a limpeza do ambiente do projeto, removendo as pastas bin/ e build/, deixando apenas as partes de código fonte. **
 
 
 
