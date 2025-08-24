@@ -210,6 +210,8 @@ string obter_nome(void) {
           }
         }
 
+        log_read.close(); // fechar fluxo de leitura.
+
         if (vezes > 0) {
           cout << "Bem vindo novamente " << nome << ", você jogou este jogo "
                << vezes << "X." << endl;
