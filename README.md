@@ -1,132 +1,186 @@
-# cpp-starter
+![C++](https://img.shields.io/badge/C++-00599C?style=flat&logo=cplusplus&logoColor=white) 
+![C++11](https://img.shields.io/badge/C++11-100%25-00599C?style=flat&logo=cplusplus&logoColor=white) 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-> Repositório voltado para estudos.
+# 🔧 cpp-starter
 
-Um espaço organizado para registrar a evolução em **C++**: exercícios, pequenos experimentos, protótipos educacionais e bibliotecas didáticas — sempre com foco em **aprender**, **praticar** e **documentar**.
-
----
-
-## Resumo
-
-Este repositório existe para estudar C++ na prática: implementar ideias, explorar a linguagem, testar algoritmos e registrar o raciocínio de forma transparente. Não é voltado a aplicações para uso final.
+Welcome to **cpp-starter**, a repository dedicated to documenting my C++ studies using *C++ Primer* (5th Edition, Lippman, Lajoie & Moo). This repository contains solved exercises, practical projects, and notes about the language and its concepts — organized for clarity and reuse.
 
 ---
 
-## Estrutura do repositório
+## 📁 Repository structure
 
-```
-cpp-starter/
-├── projetos/
-│   ├── <nome-do-projeto>/
-│   │   ├── README.md   # objetivo, contexto e instruções do projeto
-│   │   ├── src/        # código-fonte (.cpp/.hpp)
-│   │   └── include/    # headers públicos (.hpp/.h) — interfaces do projeto
-├── libs/               # bibliotecas e utilitários reutilizáveis
-├── LICENSE             # MIT
-└── README.md           # este arquivo
-```
+The repository is organized by book chapters and projects. Each exercise or relevant file lives in its own directory to keep the repository navigable.
 
----
-
-## Regras do repositório
-
-- Cada projeto vive em `projetos/<nome-do-projeto>/` e **deve** ter um `README.md` explicando objetivo, como compilar e notas de implementação.
-- Código reutilizável vai em `libs/`, com documentação mínima e exemplos curtos de uso.
-- Licença: **MIT**.
-- Prefira **commits pequenos** com mensagens claras e objetivas.
-- Sempre crie uma **branch** específica para cada alteração ou contribuição.
-- Use **Issues** para sugerir melhorias, relatar bugs e discutir ideias.
-- Mantenha a clareza e a consistência dos arquivos de documentação.
-
----
-
-## Como começar
-
-Pré-requisitos sugeridos:
-- Compilador C++ moderno (g++ ou clang, com C++20 recomendado).
-
-Exemplo mínimo de compilação local:
-
-```
-# dentro de projetos/<nome-do-projeto>/
-g++ -std=c++20 -O2 src/main.cpp -Iinclude -o <nome-do-projeto>
-./<nome-do-projeto>
-```
-
-Para múltiplos arquivos:
-
-```
-g++ -std=c++20 -O2 src/main.cpp src/outro.cpp -Iinclude -o <nome-do-projeto>
+```text
+├── chapters/
+│   ├── ch01/
+│   │   ├── ch01-ex1_hello.cpp
+│   │   └── ch01-ex2_io.cpp
+│   ├── ch02/
+│   │   ├── ch02-ex1_types.cpp
+│   │   └── ch02-ex2_variables.cpp
+├── projects/
+│   ├── text-processor/
+│   ├── simple-game/
+│   └── system-monitor/
+└── README.md
 ```
 
 ---
 
-## Template para `projetos/<nome>/README.md`
+## ▶️ How to run the code
 
+You can compile and run the exercise files or small scripts with a C++ compiler. Replace `path/to/source.cpp` with the actual file path.
+
+### On Windows (using Visual Studio Build Tools):
+
+First, install **Visual Studio Build Tools** to get access to **MSVC** and **Clang**:
+- Download from: https://visualstudio.microsoft.com/downloads/
+- Select "Desktop development with C++" workload during installation
+
+Open **Developer Command Prompt** or **Developer PowerShell** and run:
+
+```powershell
+# Using MSVC
+cl /EHsc /std:c++11 path\to\source.cpp
+.\source.exe
+
+# Using Clang (if installed via Build Tools)
+clang++ -std=c++11 path\to\source.cpp -o source.exe
+.\source.exe
 ```
-# Nome do Projeto
 
-Descrição curta (1–2 linhas) — objetivo educacional do projeto.
+### On Linux / macOS:
 
-## Objetivo
-Explique o que você pretende aprender ou demonstrar com este projeto.
+Install **GCC** or **Clang**:
 
-## Estrutura
-- `src/`: código-fonte (.cpp/.hpp)
-- `include/`: headers públicos — interfaces expostas (.hpp/.h)
-- `libs/` (se usado): utilitários/bibliotecas locais
+```bash
+# Debian/Ubuntu
+sudo apt install g++ clang
 
-## Como compilar
-g++ -std=c++20 -O2 src/main.cpp -Iinclude -o <nome-do-projeto>
-./<nome-do-projeto>
+# Fedora
+sudo dnf install gcc-c++ clang
 
-## Exemplos de uso
-Mostre entradas e saídas esperadas, trechos de execução e comentários.
+# Arch
+sudo pacman -S gcc clang
 
-## Notas de implementação
-Explique decisões de design, limitações e próximos passos.
+# macOS (Xcode Command Line Tools)
+xcode-select --install
+```
 
-## Licença
-MIT — veja `../../LICENSE`.
+Compile and run:
+
+```bash
+# Using GCC
+g++ -std=c++11 -O2 path/to/source.cpp -o program
+./program
+
+# Using Clang
+clang++ -std=c++11 -O2 path/to/source.cpp -o program
+./program
+```
+
+### Multiple source files:
+
+```bash
+# GCC
+g++ -std=c++11 -O2 src/main.cpp src/utils.cpp -Iinclude -o program
+
+# Clang
+clang++ -std=c++11 -O2 src/main.cpp src/utils.cpp -Iinclude -o program
+
+# MSVC
+cl /EHsc /std:c++11 /Iinclude src\main.cpp src\utils.cpp
 ```
 
 ---
 
-## Como contribuir
+## 🎯 Objectives
 
-1. Abra uma **Issue** para discutir a ideia brevemente.  
-2. Faça **fork** do repositório e **clone** seu fork:
-```
-git clone https://github.com/SEU_USUARIO/cpp-starter.git
-```
-3. Crie uma branch específica:
-```
-git checkout -b feat/nome-da-funcionalidade
-```
-4. Faça alterações com commits pequenos e descritivos:
-```
-git add .
-git commit -m "feat: descrição curta do que foi feito"
-git push origin feat/nome-da-funcionalidade
-```
-5. Abra um **Pull Request** explicando **o que** mudou e **por quê**, com instruções de como validar.
+- Document my study progress through *C++ Primer* (5th Edition)
+- Solve the book exercises with well-commented code
+- Build practical projects that apply the learned concepts
+- Share solutions and insights with the community
+- Establish a solid base of knowledge in modern C++
 
 ---
 
-## Convenções e boas práticas
+## 🌍 Why C++?
 
-- Organize o código em `src/` e interfaces públicas em `include/`.
-- Nomeie arquivos, funções e classes de forma clara e consistente.
-- Comente com foco didático: explique **por que** algo foi feito.
-- Inclua exemplos de entrada/saída nos READMEs dos projetos.
-- Use `.gitignore` para evitar versionar objetos e arquivos de IDE (`*.o`, `.vscode/`, `.idea/`, etc.).
-- Prefira soluções portáveis quando possível.
+C++ offers raw power for building abstractions while maintaining the ability to program using low-level operating system APIs. It bridges high-level design with system-level control, enabling:
+
+- Direct access to system resources and hardware
+- Programming with low-level APIs like *POSIX**, **Win32**, **DirectX**, and more
+- Building high-performance applications, game engines, and system software
+- Creating powerful abstractions without sacrificing efficiency
+- Fine-grained control over memory management and resource allocation
+- Cross-platform development from embedded systems to desktop applications
+
+*C++ Primer* (5th Edition) stands out because it teaches modern C++ practices, emphasizing both language fundamentals and the standard library, preparing you for real-world software development.
 
 ---
 
-## Licença e isenção
+## 🛠️ Development environment
 
-- **Licença:** MIT (veja `LICENSE` na raiz).
-- **Isenção de responsabilidade:** o software aqui é fornecido **“no estado em que se encontra”**, **sem qualquer garantia**, explícita ou implícita.
+Compilers:
+- **Windows**: MSVC (Visual Studio Build Tools) or Clang
+- **Linux**: GCC or Clang
+- **macOS**: Clang (Xcode Command Line Tools) or GCC (via Homebrew)
+
+Standard:
+- C++11
+
+Tools:
+- Visual Studio Code with C/C++ extension
+- GDB or LLDB for debugging
+
+---
+
+## 📚 Useful resources
+
+- C++ Primer (5th Edition) — Lippman, Lajoie & Moo
+- cppreference.com — Comprehensive C++ reference: https://en.cppreference.com/
+- C++ Core Guidelines: https://isocpp.github.io/CppCoreGuidelines/
+- LearnCpp.com — Modern C++ tutorial: https://www.learncpp.com/
+- Microsoft C++ Documentation: https://docs.microsoft.com/en-us/cpp/
+- GCC Documentation: https://gcc.gnu.org/onlinedocs/
+- Clang Documentation: https://clang.llvm.org/docs/
+
+---
+
+## 🤝 Contributions
+
+This repository is primarily a personal study log, but constructive contributions are welcome:
+
+- Open issues for questions, suggestions, or corrections
+- Propose alternative solutions for exercises
+- Suggest improvements for structure or documentation
+
+Please keep discussions focused and respect the project license.
+
+---
+
+## 🌐 Contact
+
+For questions, feedback, or discussions about C++ and learning approaches, visit:
+https://github.com/snake-outerheaven
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+You are free to:
+- Use the code for any purpose
+- Study and modify the code
+- Share the original code and your modifications
+
+See the `LICENSE` file for full details.
+
+---
+
+Made with focus, discipline, and deliberate practice — snake-outerheaven
 
 ---
