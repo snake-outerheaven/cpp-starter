@@ -9,7 +9,8 @@ class List
                 T value;
                 Node *next;
                 Node *previous;
-		public:
+
+        public:
                 Node(const T &v) : value(v), next(0), previous(0) {}
 
                 ~Node() {}
@@ -19,19 +20,22 @@ class List
 
         Node *head;
         Node *tail;
+        size_t len;
 
 public:
-        List() : head(0), tail(0) {}
+        List() : head(0), tail(0), len(0) {}
 
-        List(const T &v) : head(0), tail(0)
+        List(const T &v) : head(0), tail(0), len(0)
         {
                 Node *first;
 
                 first = new Node(v);
 
                 head = tail = first;
+
+                len++;
         }
-        List(const std::vector<T> &vec) : head(0), tail(0)
+        List(const std::vector<T> &vec) : head(0), tail(0), len(0)
         {
                 size_t i;
                 Node *newNode;
@@ -45,6 +49,8 @@ public:
 
                 current = tail = head;
 
+                len++;
+
                 for (i = 1; i < vec.size(); i++)
                 {
                         newNode = new Node(vec[i]);
@@ -52,6 +58,7 @@ public:
                         current->next = newNode;
                         tail = current = current->next;
                         current->previous = tmp;
+                        len++;
                 }
         }
 
@@ -69,22 +76,36 @@ public:
                         current = next;
                 }
 
-                head = tail = 0;
+                head = tail = len = 0;
+        }
+
+        bool empty() const
+        {
+                return len == 0 ? true : false;
+        }
+
+        size_t size() const
+        {
+                return len > 0 ? len : 0;
         }
 
         void push(const T &v)
         {
-                Node *newHead = new Node(v);
+                Node *newHead;
+
+                newHead = new Node(v);
 
                 if (!head)
                 {
                         head = tail = newHead;
+                        len++;
                         return;
                 }
 
                 newHead->next = head;
                 head->previous = newHead;
                 head = newHead;
+                len++;
         }
 
         void append(const T &v)
@@ -96,12 +117,14 @@ public:
                 if (!tail)
                 {
                         head = tail = newTail;
+                        len++;
                         return;
                 }
 
                 newTail->previous = tail;
                 tail->next = newTail;
                 tail = newTail;
+                len++;
         }
 
         T pop()
@@ -117,6 +140,7 @@ public:
                         value = head->value;
                         delete head;
                         tail = head = 0;
+                        len--;
                         return value;
                 }
 
@@ -129,6 +153,8 @@ public:
                 head->previous = 0;
 
                 delete oldHead;
+
+                len--;
 
                 return value;
         }
@@ -146,6 +172,7 @@ public:
                         value = tail->value;
                         delete tail;
                         head = tail = 0;
+                        len--;
                         return value;
                 }
 
@@ -158,6 +185,8 @@ public:
                 tail->next = 0;
 
                 delete oldTail;
+
+                len--;
 
                 return value;
         }
