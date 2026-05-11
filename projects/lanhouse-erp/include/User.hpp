@@ -20,17 +20,17 @@ public:
   size_t
   getId () const
   {
-    return id;
+    return this->id;
   }
   std::string
   getName () const
   {
-    return name;
+    return this->name;
   }
   bool
   isOnline () const
   {
-    return online;
+    return this->online;
   }
 
   void
@@ -39,7 +39,7 @@ public:
     this->id = id;
   }
   void
-  setName (std::string name)
+  setName (const std::string& name)
   {
     this->name = name;
   }
