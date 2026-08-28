@@ -1,0 +1,1 @@
+run g++ -Wall -Werror -Wextra and see compiler errors.
