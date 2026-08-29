@@ -1,0 +1,9 @@
+cpp comments are the same as on C11
+
+// for single line comments
+
+/*
+multi
+line
+comment
+*/
