@@ -9,14 +9,15 @@
 */
 
 #define WIN32_LEAN_AND_MEAN // para reduzir bloat da api do windows
-#include <cctype>
-#include <cmath>
-#include <iostream>
-#include <sstream>
-#include <stdexcept>
-#include <string>
-#ifdef WIN_32
-#include <windows.h>
+#include <array> // classe da biblioteca padrão que representa um vetor estático, com baterias
+#include <cctype>    // biblioteca de caracteres do C, pro C++
+#include <cmath>     // biblioteca de funções matemáticas do C, pro C++
+#include <iostream>  // biblioteca de fluxos de entrada e saída do C++
+#include <sstream>   // biblioteca de fluxos
+#include <stdexcept> // biblioteca de exceções padrão da biblioteca, usada para controle de erros mais fino
+#include <string> // classe da biblioteca padrão que representa um vetor dinâmico de caracteres.
+#ifdef _WIN32
+#include <windows.h> // include da api do windows, usada para criar programas que vão além do padrão C++ na plataforma
 #endif
 
 std::string lower (const std::string &);
@@ -31,12 +32,18 @@ main (void)
 
   int state{};
 
-#ifdef WIN_32
-  SetConsoleCp (CP_UTF);
-  SetConsoleOutputCp (CP_UTF);
+  // funções da api Win32, relacionadas ao subsistema de console de sistemas
+  // operacionais baseados no Windows NT
+  // setam a codepage do terminal, que é essencialmente o locale do terminal,
+  // esse passo é necessário porque, por padrão legado, desde o DOS, a codepage
+  // sempre é a 850, que é o Latim, não suportando entrada e saída em UTF-8
+
+#ifdef _WIN32
+  SetConsoleCP (CP_UTF8);       // seta a seção de input do console para
+  SetConsoleOutputCP (CP_UTF8); // seta o output para UTF-8
 #endif
 
-  while (1)
+  while (true)
     {
       user_input.clear ();
       std::cout << "A, B, C: ";
@@ -65,15 +72,6 @@ main (void)
 
           std::cout << "Números lidos pelo programa: " << a << " " << b << " "
                     << c << '\n';
-
-          std::cout << "Você confirma os números? ";
-
-          user_input.clear ();
-
-          std::getline (std::cin, user_input);
-
-          if (lower (user_input) == "n")
-            continue;
         }
       catch (const std::exception &e)
         {
@@ -96,22 +94,26 @@ main (void)
       switch (state)
         {
         case -1:
-          std::cout << "Não existem raízes reais para delta < 0\n";
+          std::cout << "Não existem raízes reais para delta < 0.\n";
           break;
+
         case 0:
-          x1 = -b + sqrt (d) / (2.0 * a);
-
-          std::cout << "Existe apenas uma raíz real para delta = 0\nRaíz = "
+          x1 = (-b + sqrt (d)) / (2.0 * a);
+          std::cout << "Existe apenas uma raíz real para delta = 0.\nRaíz = "
                     << x1 << '\n';
-
           break;
-        case 1:
-          x1 = -b + sqrt (d) / (2.0 * a);
-          x2 = -b - sqrt (d) / (2.0 * a);
 
-          std::cout << "Existe duas raízes reais para delta > 0\nRaíz 1 = "
+        case 1:
+          x1 = (-b + sqrt (d)) / (2.0 * a);
+          x2 = (-b - sqrt (d)) / (2.0 * a);
+
+          std::cout << "Existe duas raízes reais para delta > 0.\nRaíz 1 = "
                     << x1 << '\n'
                     << "Raiz 2 = " << x2 << '\n';
+          break;
+
+        default:
+          std::cout << "Isso é impossível!\n";
           break;
         }
     }
@@ -123,10 +125,15 @@ std::string
 lower (const std::string &str)
 {
 
-  std::string result{};
+  std::string result = str;
 
-  for (char c : str)
-    result += std::tolower (c);
+  for (char &c : result)
+    c = std::tolower (c);
 
-  return str;
+  return result;
 }
+
+// recebe o endereço de memória de um std::string com o modificador const,
+// impedindo alterações inplace
+// a idéia aqui é gerar uma nova cópia de uma string com todos seus caracteres
+// minúsculos.
