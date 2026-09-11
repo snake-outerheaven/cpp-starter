@@ -113,8 +113,6 @@ main (void)
           std::cout << "Isso é impossível!\n";
           break; // XD
         }
-
-      break; // remover, debug
     }
 
   return 0;
