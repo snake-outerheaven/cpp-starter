@@ -22,49 +22,55 @@ using std::pow;
 using std::string;
 using std::stringstream;
 
-int main(void) {
+int
+main (void)
+{
   size_t i{};
   string user_input{};
   cout << "Digite o índice desejado para o primeiro vetor do exercício: ";
-  getline(cin, user_input);
+  getline (cin, user_input);
 
 #ifdef _WIN32
-  SetConsoleCP(CP_UTF8);
-  SetConsoleOutputCP(CP_UTF8);
+  SetConsoleCP (CP_UTF8);
+  SetConsoleOutputCP (CP_UTF8);
 #endif
 
-  try {
-    stringstream s(user_input);
-    s.exceptions(std::ios::failbit | std::ios::badbit);
-    size_t siz{};
+  try
+    {
+      stringstream s (user_input);
+      s.exceptions (std::ios::failbit | std::ios::badbit);
+      size_t siz{};
 
-    s >> siz;
+      s >> siz;
 
-    if (siz <= 0)
-      throw std::runtime_error(
-          "Não é possível criar vetores com indices negativos!");
+      if (siz <= 0)
+        throw std::runtime_error (
+            "Não é possível criar vetores com indices negativos!");
 
-    double vec[siz], prod[siz];
+      double vec[siz], prod[siz];
 
-    for (i = 0; i < siz; i++) {
-      cout << "Digite o " << i + 1 << "º número: ";
-      cin >> vec[i];
-      prod[i] = vec[i] + pow(vec[i], 2.0);
+      for (i = 0; i < siz; i++)
+        {
+          cout << "Digite o " << i + 1 << "º número: ";
+          cin >> vec[i];
+          prod[i] = vec[i] + pow (vec[i], 2.0);
+        }
+
+      double prod_final{ 0 };
+
+      for (i = 0; i < siz; i++)
+        prod_final += prod[i];
+
+      cout << "A soma de todos os termos do vetor produzido com o vetor "
+              "inserido "
+              "pelo usuário é : "
+           << prod_final << '\n';
     }
-
-    double prod_final{0};
-
-    for (i = 0; i < siz; i++)
-      prod_final += prod[i];
-
-    cout << "A soma de todos os termos do vetor produzido com o vetor inserido "
-            "pelo usuário é : "
-         << prod_final << '\n';
-
-  } catch (const std::exception &e) {
-    cerr << e.what() << '\n';
-    return 1;
-  }
+  catch (const std::exception &e)
+    {
+      cerr << e.what () << '\n';
+      return 1;
+    }
 
   return 0;
 }
