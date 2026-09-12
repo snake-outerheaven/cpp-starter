@@ -68,7 +68,7 @@ main (void)
           s >> a >> b >> c; // se subir exceção, cai no catch.
 
           if (a == 0)
-            throw std::runtime_error (
+            throw std::invalid_argument (
                 "Não existe função de segundo grau com coeficiente a = 0");
           // considera regra de existência da função quadrática.
         }

@@ -4,68 +4,106 @@ com seu quadrado. O primeiro (ìndice 0 é o que o usuário digitar.) Imprima a
 soma de todos os termos.
 */
 
+#define WIN32_LEAN_AND_MEAN
+#include <cctype>
 #include <cmath>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <vector>
+
+std::string lower (const std::string &);
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
-using std::cerr;
-using std::cin;
-using std::cout;
-using std::getline;
-using std::pow;
-using std::string;
-using std::stringstream;
+int
+main (void)
+{
+  std::vector<long double> v{};
 
-int main(void) {
-  size_t i{};
-  string user_input{};
-  cout << "Digite o índice desejado para o primeiro vetor do exercício: ";
-  getline(cin, user_input);
+  std::string user_input{};
+
+  std::stringstream s{};
 
 #ifdef _WIN32
-  SetConsoleCP(CP_UTF8);
-  SetConsoleOutputCP(CP_UTF8);
+  SetConsoleCP (CP_UTF8);
+  SetConsoleOutputCP (CP_UTF8);
 #endif
 
-  try {
-    stringstream s(user_input);
-    s.exceptions(std::ios::failbit | std::ios::badbit);
-    size_t siz{};
+  while (1)
+    {
+      int idx{};
+      long double first{};
+      long double prod_final{ 0 };
+      user_input.clear ();
+      v.clear ();
+      s.clear ();
+      std::cout << "Digite o tamanho do vector desejado: ";
+      std::getline (std::cin, user_input);
 
-    s >> siz;
+      if (lower (user_input) == "sair")
+        break;
 
-    if (siz <= 0)
-      throw std::runtime_error(
-          "Não é possível criar vetores com indices negativos!");
+      s.str (user_input);
+      s.exceptions (std::ios::failbit | std::ios::badbit);
 
-    double vec[siz], prod[siz];
+      try
+        {
+          s.clear ();
+          s >> idx;
 
-      cout << "Digite o " << i + 1 << "º número: ";
-      cin >> vec[0];
+          if (idx <= 0)
+            throw std::invalid_argument ("Não existe vetores com idx <= 0");
 
-    for (i = 1; i < siz; i++) {
-      prod[i] = vec[i-1] + pow(vec[i-1], 2.0);
+          v.resize (idx); // faz a préalocação de memória aqui, para facilitar.
+
+          std::cout << "Digite o número do índice 0: ";
+          std::getline (std::cin, user_input);
+          s.str (user_input);
+          s.clear ();
+          s >> first;
+          v.at (0) = first;
+
+          prod_final += first;
+
+          for (auto i = (v.begin () + 1); i < v.end (); i++)
+            {
+              auto ant = *(
+                  i
+                  - 1); // desreferencia o iterador para obter o valor anterior
+              *i = ant + std::pow (ant, 2);
+
+              prod_final += *i;
+            }
+        }
+      catch (const std::exception &e)
+        {
+          std::cerr << "Erro crítico em sessão importante do programa: "
+                    << e.what () << '\n';
+          continue;
+        }
+
+      std::cout << "Produto final: " << prod_final << std::endl;
+
+      break; // remover, debug
     }
 
-    double prod_final{0};
-
-    for (i = 0; i < siz; i++)
-      prod_final += prod[i];
-
-    cout << "A soma de todos os termos do vetor produzido com o vetor inserido "
-            "pelo usuário é : "
-         << prod_final << '\n';
-
-  } catch (const std::exception &e) {
-    cerr << e.what() << '\n';
-    return 1;
-  }
-
   return 0;
+}
+
+std::string
+lower (const std::string &str)
+{
+  std::string result{};
+
+  for (auto c : str)
+    {
+      result.push_back (
+          static_cast<char> (std::tolower (static_cast<unsigned char> (c))));
+    }
+
+  return result;
 }
