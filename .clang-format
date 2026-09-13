@@ -1,10 +1,10 @@
 Language: Cpp
-BasedOnStyle: GNU
-IndentWidth: 2
+BasedOnStyle: Microsoft
+IndentWidth: 4
 ContinuationIndentWidth: 4
-TabWidth: 8
+TabWidth: 4
 UseTab: Never
-BreakBeforeBraces: GNU
+BreakBeforeBraces: Allman
 BraceWrapping:
   AfterClass: true
   AfterControlStatement: Always
@@ -15,17 +15,18 @@ BraceWrapping:
   AfterUnion: true
   BeforeCatch: true
   BeforeElse: true
-  IndentBraces: true
+  IndentBraces: false
   SplitEmptyFunction: true
-SpaceBeforeParens: Always
-SpaceAfterCStyleCast: true
-ColumnLimit: 79
+
+SpaceBeforeParens: ControlStatements
+SpaceAfterCStyleCast: false
+ColumnLimit: 120
 AlignAfterOpenBracket: Align
-AlwaysBreakAfterReturnType: AllDefinitions
-BreakBeforeBinaryOperators: All
+AlwaysBreakAfterReturnType: None
+BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
-BinPackArguments: false
-BinPackParameters: false
+BinPackArguments: true
+BinPackParameters: true
 PointerAlignment: Right
 SortIncludes: true
 Standard: Latest
