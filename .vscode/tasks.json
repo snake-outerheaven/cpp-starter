@@ -1,0 +1,29 @@
+{
+        "tasks": [
+                {
+                        "type": "cppbuild",
+                        "label": "C/C++: clang++.exe arquivo de build ativo",
+                        "command": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang++.exe",
+                        "args": [
+                                "-fcolor-diagnostics",
+                                "-fansi-escape-codes",
+                                "-g",
+                                "${file}",
+                                "-o",
+                                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                        ],
+                        "options": {
+                                "cwd": "${fileDirname}"
+                        },
+                        "problemMatcher": [
+                                "$gcc"
+                        ],
+                        "group": {
+                                "kind": "build",
+                                "isDefault": true
+                        },
+                        "detail": "Tarefa gerada pelo Depurador."
+                }
+        ],
+        "version": "2.0.0"
+}
