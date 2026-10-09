@@ -30,7 +30,7 @@ void waitMillis(int);
 
 int main(void)
 {
-    double x1{}, y1{}, x2{}, y2{}, inter1{}, inter2{}, interFinal, r{};
+    double x1{}, y1{}, x2{}, y2{}, inter1{}, inter2{}, interFinal{}, r{};
     std::string userInput{};
 
 #ifdef _WIN32
