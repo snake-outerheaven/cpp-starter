@@ -30,7 +30,7 @@ void waitMillis(int);
 
 int main(void)
 {
-    double x1{}, y1{}, x2{}, y2{}, inter1{}, inter2{}, interFinal, r{};
+    double x1{}, y1{}, x2{}, y2{}, inter1{}, inter2{}, interFinal{}, r{};
     std::string userInput{};
 
 #ifdef _WIN32
@@ -56,9 +56,8 @@ int main(void)
         {
 
             if (userInput.empty())
-            {
                 throw std::invalid_argument("Entrada vazia detectada, reescreva novamente!");
-            }
+
             std::stringstream s(userInput);
 
             s.exceptions(std::ios::badbit | std::ios::failbit);
@@ -78,10 +77,7 @@ int main(void)
             inter2 = ((y2 - y1) * (y2 - y1));
 
             interFinal = inter1 + inter2;
-
-            if (interFinal < 0)
-                throw std::domain_error("Não existe raiz de números negativos"); // dificil, mas acho válido aqui
-
+            
             r = std::sqrt(interFinal);
 
             std::cout << "A distância euclidiana entre os pontos 1 (x1: " << x1 << " y1: " << y1
