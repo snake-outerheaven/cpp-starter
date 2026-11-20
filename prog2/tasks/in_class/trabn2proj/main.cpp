@@ -1,5 +1,5 @@
 #include "produto.hpp"
-#include <cstdio>
+#include "cantina.hpp"
 
 int main(void)
 {
@@ -10,6 +10,12 @@ int main(void)
     prod1.addEstoque(2);
 
     prod1.exibir();
+	
+    Cantina cant;
+
+    cant.cadastrarProduto(1, s, 57.25);
+
+    cant.listarProdutos();
 
     return 0;
 }

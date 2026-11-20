@@ -1,5 +1,5 @@
-#ifndef PRODUCT_H
-#define PRODUCT_H
+#ifndef PRODUCT_HPP
+#define PRODUCT_HPP
 
 #include <string>
 
@@ -18,7 +18,7 @@ class Produto
     int getCod(void) const;
     std::string getNome() const;
     double getPreco() const;
-    int getQuant(int) const;
+    int getQuant() const;
     bool setPreco(double);
     bool addEstoque(int);
     bool remEstoque(int);

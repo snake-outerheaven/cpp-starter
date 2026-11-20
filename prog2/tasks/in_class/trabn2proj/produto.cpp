@@ -22,6 +22,16 @@ std::string Produto::getNome(void) const
     return this->nome;
 }
 
+double Produto::getPreco() const
+{
+    return this->price;
+}
+
+int Produto::getQuant() const
+{
+    return this->quant;
+}
+
 bool Produto::setPreco(double prec)
 {
     if (prec > 0.0)
@@ -33,17 +43,12 @@ bool Produto::setPreco(double prec)
     return false;
 }
 
-double Produto::getPreco() const
-{
-    return this->price;
-}
-
-bool Produto::addEstoque(int q)
+bool Produto::addEstoque(int qtd)
 {
 
-    if (q >= 0)
+    if (qtd >= 0)
     {
-        this->quant += quant;
+        this->quant += qtd;
         return true;
     }
 
@@ -55,7 +60,10 @@ bool Produto::remEstoque(int qtd)
 
     if (qtd >= 0)
     {
-        this->quant -= quant;
+        if ((this->quant - qtd) < 0)
+            return false;
+
+        this->quant -= qtd;
         return true;
     }
 
