@@ -1,186 +1,115 @@
-![C++](https://img.shields.io/badge/C++-00599C?style=flat&logo=cplusplus&logoColor=white) 
-![C++11](https://img.shields.io/badge/C++11-100%25-00599C?style=flat&logo=cplusplus&logoColor=white) 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+# cpp-starter
 
-# 🔧 cpp-starter
+[![C++](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white)](https://en.cppreference.com/w/cpp/17)
+[![Estilo: Allman](https://img.shields.io/badge/estilo-clang--format%20(Allman)-blue)](.clang-format)
+[![Licença: MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-yellow.svg)](LICENSE)
 
-Welcome to **cpp-starter**, a repository dedicated to documenting my C++ studies using *C++ Primer* (5th Edition, Lippman, Lajoie & Moo). This repository contains solved exercises, practical projects, and notes about the language and its concepts — organized for clarity and reuse.
+Exercícios, trabalhos acadêmicos e pequenos projetos do estudo de C++ com o
+*C++ Primer* (5ª ed.) e da disciplina de *Programação de Computadores 2*.
 
----
+## Sumário
 
-## 📁 Repository structure
+- [Contexto](#contexto)
+- [Requisitos](#requisitos)
+- [Compilação](#compilação)
+- [Estrutura do repositório](#estrutura-do-repositório)
+- [Padrão de código](#padrão-de-código)
+- [Contribuição](#contribuição)
+- [Contato](#contato)
+- [Licença](#licença)
 
-The repository is organized by book chapters and projects. Each exercise or relevant file lives in its own directory to keep the repository navigable.
+## Contexto
+
+Este repositório é um registro de estudos. Cada arquivo-fonte é um programa
+independente, salvo indicação em contrário. Não há biblioteca compartilhada nem
+sistema de build global.
+
+| Origem | Escopo |
+|---|---|
+| *C++ Primer*, 5ª ed. (Lippman, Lajoie & Moo) | Exercícios do livro, em `primer/` |
+| Programação de Computadores 2 (Sistemas de Informação, FEMASS) | Trabalhos de aula e de casa, em `prog2/` ([detalhes](prog2/README.md)) |
+| Pessoal | Programas avulsos, em `projects/` |
+
+## Requisitos
+
+| Componente | Mínimo | Testado com |
+|---|---|---|
+| Compilador | Qualquer compilador C++17 | GCC, Clang, MSVC 19.5x |
+| Plataforma | POSIX ou Windows | Debian 13, OpenBSD, Windows 11 |
+| Opcional | Boost (algoritmos de string) | Só `projects/guessing-game` |
+| Opcional | clang-format | Para formatação, ver [Padrão de código](#padrão-de-código) |
+
+## Compilação
+
+Cada `.cpp` compila sozinho:
+
+```sh
+# GCC / Clang (Linux, BSD, macOS)
+c++ -std=c++17 -Wall -Wextra -O2 caminho/do/arquivo.cpp -o prog
+./prog
+```
+
+```powershell
+# MSVC (Developer Command Prompt)
+cl /std:c++17 /W4 /EHsc caminho\do\arquivo.cpp
+.\arquivo.exe
+```
+
+Programas com vários arquivos precisam de todas as unidades de tradução:
+
+```sh
+cd prog2/tasks/in_class/trabn2proj
+c++ -std=c++17 -Wall -Wextra main.cpp produto.cpp -o produto
+```
+
+## Estrutura do repositório
 
 ```text
-├── chapters/
-│   ├── ch01/
-│   │   ├── ch01-ex1_hello.cpp
-│   │   └── ch01-ex2_io.cpp
-│   ├── ch02/
-│   │   ├── ch02-ex1_types.cpp
-│   │   └── ch02-ex2_variables.cpp
+.
+├── primer/
+│   └── ch01/            Exercícios do capítulo 1 do C++ Primer
+├── prog2/
+│   └── tasks/
+│       ├── in_class/    Trabalhos feitos em aula
+│       │   └── trabn2proj/   Trabalho da N2 em dupla (classe Produto)
+│       └── in_home/     Trabalhos de casa
 ├── projects/
-│   ├── text-processor/
-│   ├── simple-game/
-│   └── system-monitor/
+│   ├── guessing-game/
+│   ├── hello/
+│   ├── linkedlist/
+│   └── unicode/
+├── .clang-format
+├── LICENSE
 └── README.md
 ```
 
----
+## Padrão de código
 
-## ▶️ How to run the code
+A formatação está definida no [`.clang-format`](.clang-format): chaves no
+estilo Allman, indentação de 4 espaços e limite de 120 colunas. Formate antes
+de commitar:
 
-You can compile and run the exercise files or small scripts with a C++ compiler. Replace `path/to/source.cpp` with the actual file path.
-
-### On Windows (using Visual Studio Build Tools):
-
-First, install **Visual Studio Build Tools** to get access to **MSVC** and **Clang**:
-- Download from: https://visualstudio.microsoft.com/downloads/
-- Select "Desktop development with C++" workload during installation
-
-Open **Developer Command Prompt** or **Developer PowerShell** and run:
-
-```powershell
-# Using MSVC
-cl /EHsc /std:c++11 path\to\source.cpp
-.\source.exe
-
-# Using Clang (if installed via Build Tools)
-clang++ -std=c++11 path\to\source.cpp -o source.exe
-.\source.exe
+```sh
+git ls-files '*.cpp' '*.hpp' '*.c' '*.h' | xargs clang-format -i
 ```
 
-### On Linux / macOS:
+Commits que só mudam a formatação usam o prefixo `style:` e não contêm
+alterações de comportamento.
 
-Install **GCC** or **Clang**:
+## Contribuição
 
-```bash
-# Debian/Ubuntu
-sudo apt install g++ clang
+Este é um repositório pessoal de estudos. Issues apontando erros ou sugerindo
+soluções alternativas são bem-vindas. Pull requests devem seguir o
+[Padrão de código](#padrão-de-código) e tratar um assunto por commit.
 
-# Fedora
-sudo dnf install gcc-c++ clang
+## Contato
 
-# Arch
-sudo pacman -S gcc clang
+Dúvidas, sugestões ou discussões sobre C++: <https://github.com/snake-outerheaven>
 
-# macOS (Xcode Command Line Tools)
-xcode-select --install
-```
+## Licença
 
-Compile and run:
-
-```bash
-# Using GCC
-g++ -std=c++11 -O2 path/to/source.cpp -o program
-./program
-
-# Using Clang
-clang++ -std=c++11 -O2 path/to/source.cpp -o program
-./program
-```
-
-### Multiple source files:
-
-```bash
-# GCC
-g++ -std=c++11 -O2 src/main.cpp src/utils.cpp -Iinclude -o program
-
-# Clang
-clang++ -std=c++11 -O2 src/main.cpp src/utils.cpp -Iinclude -o program
-
-# MSVC
-cl /EHsc /std:c++11 /Iinclude src\main.cpp src\utils.cpp
-```
+[MIT](LICENSE) © snake-outerheaven
 
 ---
 
-## 🎯 Objectives
-
-- Document my study progress through *C++ Primer* (5th Edition)
-- Solve the book exercises with well-commented code
-- Build practical projects that apply the learned concepts
-- Share solutions and insights with the community
-- Establish a solid base of knowledge in modern C++
-
----
-
-## 🌍 Why C++?
-
-C++ offers raw power for building abstractions while maintaining the ability to program using low-level operating system APIs. It bridges high-level design with system-level control, enabling:
-
-- Direct access to system resources and hardware
-- Programming with low-level APIs like *POSIX**, **Win32**, **DirectX**, and more
-- Building high-performance applications, game engines, and system software
-- Creating powerful abstractions without sacrificing efficiency
-- Fine-grained control over memory management and resource allocation
-- Cross-platform development from embedded systems to desktop applications
-
-*C++ Primer* (5th Edition) stands out because it teaches modern C++ practices, emphasizing both language fundamentals and the standard library, preparing you for real-world software development.
-
----
-
-## 🛠️ Development environment
-
-Compilers:
-- **Windows**: MSVC (Visual Studio Build Tools) or Clang
-- **Linux**: GCC or Clang
-- **macOS**: Clang (Xcode Command Line Tools) or GCC (via Homebrew)
-
-Standard:
-- C++11
-
-Tools:
-- Visual Studio Code with C/C++ extension
-- GDB or LLDB for debugging
-
----
-
-## 📚 Useful resources
-
-- C++ Primer (5th Edition) — Lippman, Lajoie & Moo
-- cppreference.com — Comprehensive C++ reference: https://en.cppreference.com/
-- C++ Core Guidelines: https://isocpp.github.io/CppCoreGuidelines/
-- LearnCpp.com — Modern C++ tutorial: https://www.learncpp.com/
-- Microsoft C++ Documentation: https://docs.microsoft.com/en-us/cpp/
-- GCC Documentation: https://gcc.gnu.org/onlinedocs/
-- Clang Documentation: https://clang.llvm.org/docs/
-
----
-
-## 🤝 Contributions
-
-This repository is primarily a personal study log, but constructive contributions are welcome:
-
-- Open issues for questions, suggestions, or corrections
-- Propose alternative solutions for exercises
-- Suggest improvements for structure or documentation
-
-Please keep discussions focused and respect the project license.
-
----
-
-## 🌐 Contact
-
-For questions, feedback, or discussions about C++ and learning approaches, visit:
-https://github.com/snake-outerheaven
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-You are free to:
-- Use the code for any purpose
-- Study and modify the code
-- Share the original code and your modifications
-
-See the `LICENSE` file for full details.
-
----
-
-Made with focus, discipline, and deliberate practice — snake-outerheaven
-
----
+Feito com foco, disciplina e prática deliberada.
