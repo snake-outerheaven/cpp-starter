@@ -1,14 +1,20 @@
-CC=clang++
-SRC=*cpp
-OUT=GenCan
+CXX      = c++
+CXXFLAGS = -Wall -Wextra -Werror
+SRC      = *.cpp
+OUT      = a.out
 
-all:
-	$(CC) -Wall -Wextra -Werror $(SRC) -o $(OUT)
+all: $(OUT)
+
+$(OUT): $(SRC)
+	$(CXX) $(CXXFLAGS) $(SRC) -o $(OUT)
+
+run: $(OUT)
 	./$(OUT)
 
 clean:
-	rm $(OUT)* 
+	rm -f $(OUT)
 
+clean_build: clean
+	rm -f *~ *.o *.core
 
-clean_build:
-	 rm *~ && rm .*
+.PHONY: all run clean clean_build

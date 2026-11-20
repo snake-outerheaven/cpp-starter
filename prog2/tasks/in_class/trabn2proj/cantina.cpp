@@ -31,7 +31,8 @@ bool Cantina::cadastrarProduto(int cod, std::string &nm, double pr)
         return false;
 
     Produto prod(cod, nm, pr);
-    prods.insert(prod);
+
+    prods.push_back(prod);
 
     return false;
 }
