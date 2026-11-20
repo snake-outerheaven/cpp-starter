@@ -4,13 +4,12 @@
 
 #include <iostream>
 
-int
-main (void)
+int main(void)
 {
-  int i = 10;
+    int i = 10;
 
-  while (i >= 0)
-    std::cout << i << '\n', i--;
+    while (i >= 0)
+        std::cout << i << '\n', i--;
 
-  return 0;
+    return 0;
 }

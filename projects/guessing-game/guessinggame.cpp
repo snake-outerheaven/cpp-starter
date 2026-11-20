@@ -14,97 +14,91 @@
   Refazer com orientação a objetos.
 */
 
-int
-main (void)
+int main(void)
 {
-  std::random_device rd;
-  std::mt19937 rand (rd ());
-  std::uniform_int_distribution<int> dist (MIN, MAX);
+    std::random_device rd;
+    std::mt19937 rand(rd());
+    std::uniform_int_distribution<int> dist(MIN, MAX);
 
-  std::string user_input;
+    std::string user_input;
 
-  int secret = dist (rand);
+    int secret = dist(rand);
 
-  int num, tries = 0, diff;
+    int num, tries = 0, diff;
 
-  while (1)
+    while (1)
     {
-      std::cin.clear ();
+        std::cin.clear();
 
-      tries++;
+        tries++;
 
-      std::cout << "Digite um número entre " << MIN << " e " << MAX
-                << "\n(digite sair para encerrar o "
-                   "jogo)\nVocê está na tentativa "
-                << tries << ".\n-> ";
-      std::getline (std::cin, user_input);
+        std::cout << "Digite um número entre " << MIN << " e " << MAX
+                  << "\n(digite sair para encerrar o "
+                     "jogo)\nVocê está na tentativa "
+                  << tries << ".\n-> ";
+        std::getline(std::cin, user_input);
 
-      boost::trim (user_input);
+        boost::trim(user_input);
 
-      if (boost::equals (user_input, "sair"))
+        if (boost::equals(user_input, "sair"))
         {
-          std::cout << "Entendido, saindo do programa...";
-          std::this_thread::sleep_for (std::chrono::milliseconds (1250));
-          return 0;
+            std::cout << "Entendido, saindo do programa...";
+            std::this_thread::sleep_for(std::chrono::milliseconds(1250));
+            return 0;
         }
 
-      try
+        try
         {
-          num = std::stoi (user_input);
+            num = std::stoi(user_input);
         }
-      catch (const std::exception &e)
+        catch (const std::exception &e)
         {
-          std::cerr << "Digite um número válido!!!!" << '\n';
-          std::this_thread::sleep_for (std::chrono::milliseconds (STD_WAIT));
-          continue;
+            std::cerr << "Digite um número válido!!!!" << '\n';
+            std::this_thread::sleep_for(std::chrono::milliseconds(STD_WAIT));
+            continue;
         }
 
-      std::cout << "O número digitado lido pelo programa é " << num << ".\n";
+        std::cout << "O número digitado lido pelo programa é " << num << ".\n";
 
-      std::this_thread::sleep_for (std::chrono::milliseconds (STD_WAIT));
+        std::this_thread::sleep_for(std::chrono::milliseconds(STD_WAIT));
 
-      diff = secret - num;
+        diff = secret - num;
 
-      if (diff)
+        if (diff)
         {
-          if (diff > 0)
+            if (diff > 0)
             {
 
-              if (diff <= 2)
-                std::cout
-                    << "Está muito perto, tente um número um pouco maior!\n";
+                if (diff <= 2)
+                    std::cout << "Está muito perto, tente um número um pouco maior!\n";
 
-              else if (diff <= 10)
-                std::cout
-                    << "Está pelando!!!! tente um número um cadinho maior!\n";
-              else
-                std::cout << "Está muito longe, tente um número maior.\n";
+                else if (diff <= 10)
+                    std::cout << "Está pelando!!!! tente um número um cadinho maior!\n";
+                else
+                    std::cout << "Está muito longe, tente um número maior.\n";
             }
-          else if (diff < 0)
+            else if (diff < 0)
             {
-              if (diff >= -2)
-                std::cout
-                    << "Está muito perto, tente um número um pouco menor!\n";
-              else if (diff >= -10)
-                std::cout
-                    << "Está pelando!!!! tente um número um cadinho menor!\n";
-              else
-                std::cout << "Está muito longe, tente um número menor\n";
+                if (diff >= -2)
+                    std::cout << "Está muito perto, tente um número um pouco menor!\n";
+                else if (diff >= -10)
+                    std::cout << "Está pelando!!!! tente um número um cadinho menor!\n";
+                else
+                    std::cout << "Está muito longe, tente um número menor\n";
             }
-          continue;
+            continue;
         }
-      else
+        else
         {
-          if (tries > 2)
-            std::cout << "Você acertou o número secreto com " << tries
-                      << "tentativas!\n";
+            if (tries > 2)
+                std::cout << "Você acertou o número secreto com " << tries << "tentativas!\n";
 
-          else
+            else
 
-            std::cout << "Você acertou o número secreto de primeira!\n";
-          break;
+                std::cout << "Você acertou o número secreto de primeira!\n";
+            break;
         }
     }
 
-  return 0;
+    return 0;
 }

@@ -1,268 +1,260 @@
 #include <vector>
 
-template <class T>
-class List
+template <class T> class List
 {
-  class Node
-  {
-    T value;
-    Node *next;
-    Node *previous;
+    class Node
+    {
+        T value;
+        Node *next;
+        Node *previous;
+
+      public:
+        Node(const T &v) : value(v), next(0), previous(0)
+        {
+        }
+
+        ~Node()
+        {
+        }
+
+        friend class List;
+    };
+
+    Node *head;
+    Node *tail;
+    size_t len;
 
   public:
-    Node (const T &v) : value (v), next (0), previous (0) {}
+    List() : head(0), tail(0), len(0)
+    {
+    }
 
-    ~Node () {}
+    List(const T &v) : head(0), tail(0), len(0)
+    {
+        Node *first;
 
-    friend class List;
-  };
+        first = new Node(v);
 
-  Node *head;
-  Node *tail;
-  size_t len;
+        head = tail = first;
 
-public:
-  List () : head (0), tail (0), len (0) {}
-
-  List (const T &v) : head (0), tail (0), len (0)
-  {
-    Node *first;
-
-    first = new Node (v);
-
-    head = tail = first;
-
-    len++;
-  }
-
-  List (const std::vector<T> &vec) : head (0), tail (0), len (0)
-  {
-    size_t i;
-    Node *newNode;
-    Node *tmp;
-    Node *current;
-
-    if (vec.empty ())
-      return;
-
-    head = new Node (vec.at (0));
-
-    current = tail = head;
-
-    len++;
-
-    for (i = 1; i < vec.size (); i++)
-      {
-        newNode = new Node (vec.at (i));
-        tmp = current;
-        current->next = newNode;
-        tail = current = current->next;
-        current->previous = tmp;
         len++;
-      }
-  }
+    }
 
-  ~List ()
-  {
-    Node *current;
-    Node *next;
+    List(const std::vector<T> &vec) : head(0), tail(0), len(0)
+    {
+        size_t i;
+        Node *newNode;
+        Node *tmp;
+        Node *current;
 
-    current = head;
+        if (vec.empty())
+            return;
 
-    while (current)
-      {
-        next = current->next;
-        delete current;
-        current = next;
-      }
+        head = new Node(vec.at(0));
 
-    head = tail = len = 0;
-  }
+        current = tail = head;
 
-  bool
-  empty () const
-  {
-    return len == 0 ? true : false;
-  }
-
-  size_t
-  size () const
-  {
-    return len > 0 ? len : 0;
-  }
-
-  void
-  push (const T &v)
-  {
-    Node *newHead;
-
-    newHead = new Node (v);
-
-    if (!head)
-      {
-        head = tail = newHead;
         len++;
-        return;
-      }
 
-    newHead->next = head;
-    head->previous = newHead;
-    head = newHead;
-    len++;
-  }
+        for (i = 1; i < vec.size(); i++)
+        {
+            newNode = new Node(vec.at(i));
+            tmp = current;
+            current->next = newNode;
+            tail = current = current->next;
+            current->previous = tmp;
+            len++;
+        }
+    }
 
-  void
-  append (const T &v)
-  {
-    Node *newTail;
+    ~List()
+    {
+        Node *current;
+        Node *next;
 
-    newTail = new Node (v);
+        current = head;
 
-    if (!tail)
-      {
-        head = tail = newTail;
+        while (current)
+        {
+            next = current->next;
+            delete current;
+            current = next;
+        }
+
+        head = tail = len = 0;
+    }
+
+    bool empty() const
+    {
+        return len == 0 ? true : false;
+    }
+
+    size_t size() const
+    {
+        return len > 0 ? len : 0;
+    }
+
+    void push(const T &v)
+    {
+        Node *newHead;
+
+        newHead = new Node(v);
+
+        if (!head)
+        {
+            head = tail = newHead;
+            len++;
+            return;
+        }
+
+        newHead->next = head;
+        head->previous = newHead;
+        head = newHead;
         len++;
-        return;
-      }
+    }
 
-    newTail->previous = tail;
-    tail->next = newTail;
-    tail = newTail;
-    len++;
-  }
+    void append(const T &v)
+    {
+        Node *newTail;
 
-  T
-  pop ()
-  {
-    Node *oldHead;
-    T value;
+        newTail = new Node(v);
 
-    if (!head)
-      return T ();
+        if (!tail)
+        {
+            head = tail = newTail;
+            len++;
+            return;
+        }
 
-    if (head->next == 0)
-      {
+        newTail->previous = tail;
+        tail->next = newTail;
+        tail = newTail;
+        len++;
+    }
+
+    T pop()
+    {
+        Node *oldHead;
+        T value;
+
+        if (!head)
+            return T();
+
+        if (head->next == 0)
+        {
+            value = head->value;
+            delete head;
+            tail = head = 0;
+            len--;
+            return value;
+        }
+
+        oldHead = head;
+
         value = head->value;
-        delete head;
-        tail = head = 0;
+
+        head = head->next;
+
+        head->previous = 0;
+
+        delete oldHead;
+
         len--;
+
         return value;
-      }
+    }
 
-    oldHead = head;
+    T detach()
+    {
+        T value;
+        Node *oldTail;
 
-    value = head->value;
+        if (!tail)
+            return T();
 
-    head = head->next;
+        if (tail->previous == 0)
+        {
+            value = tail->value;
+            delete tail;
+            head = tail = 0;
+            len--;
+            return value;
+        }
 
-    head->previous = 0;
-
-    delete oldHead;
-
-    len--;
-
-    return value;
-  }
-
-  T
-  detach ()
-  {
-    T value;
-    Node *oldTail;
-
-    if (!tail)
-      return T ();
-
-    if (tail->previous == 0)
-      {
         value = tail->value;
-        delete tail;
-        head = tail = 0;
+
+        oldTail = tail;
+
+        tail = tail->previous;
+
+        tail->next = 0;
+
+        delete oldTail;
+
         len--;
+
         return value;
-      }
-
-    value = tail->value;
-
-    oldTail = tail;
-
-    tail = tail->previous;
-
-    tail->next = 0;
-
-    delete oldTail;
-
-    len--;
-
-    return value;
-  }
-
-  class Iterator
-  {
-    Node *current;
-
-  public:
-    Iterator (Node *node) : current (node) {}
-
-    T &
-    operator* ()
-    {
-      return current->value;
     }
 
-    Iterator &
-    operator++ ()
+    class Iterator
     {
-      current = current->next;
+        Node *current;
 
-      return *this;
+      public:
+        Iterator(Node *node) : current(node)
+        {
+        }
+
+        T &operator*()
+        {
+            return current->value;
+        }
+
+        Iterator &operator++()
+        {
+            current = current->next;
+
+            return *this;
+        }
+
+        Iterator operator++(int)
+        {
+            Iterator tmp = *this;
+            current = current->next;
+            return tmp;
+        }
+
+        Iterator &operator--()
+        {
+            current = current->previous;
+            return *this;
+        }
+
+        Iterator operator--(int)
+        {
+            Iterator tmp = *this;
+            current = current->previous;
+            return tmp;
+        }
+
+        bool operator!=(const Iterator &other) const
+        {
+            return current != other.current;
+        }
+
+        bool operator==(const Iterator &other) const
+        {
+            return current == other.current;
+        }
+    };
+
+    Iterator begin()
+    {
+        return Iterator(head);
     }
 
-    Iterator
-    operator++ (int)
+    Iterator end()
     {
-      Iterator tmp = *this;
-      current = current->next;
-      return tmp;
+        return Iterator(0);
     }
-
-    Iterator &
-    operator-- ()
-    {
-      current = current->previous;
-      return *this;
-    }
-
-    Iterator
-    operator-- (int)
-    {
-      Iterator tmp = *this;
-      current = current->previous;
-      return tmp;
-    }
-
-    bool
-    operator!= (const Iterator &other) const
-    {
-      return current != other.current;
-    }
-
-    bool
-    operator== (const Iterator &other) const
-    {
-      return current == other.current;
-    }
-  };
-
-  Iterator
-  begin ()
-  {
-    return Iterator (head);
-  }
-
-  Iterator
-  end ()
-  {
-    return Iterator (0);
-  }
 };

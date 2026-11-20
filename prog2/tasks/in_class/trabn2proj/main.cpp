@@ -1,16 +1,15 @@
-#include <cstdio>
 #include "produto.hpp"
+#include <cstdio>
 
 int main(void)
 {
-	std::string s("pizza");
+    std::string s("pizza");
 
-	Produto prod1(1, s, 57.25);
+    Produto prod1(1, s, 57.25);
 
-	prod1.addEstoque(2);
+    prod1.addEstoque(2);
 
-	prod1.exibir();
+    prod1.exibir();
 
-	return 0;
+    return 0;
 }
-	

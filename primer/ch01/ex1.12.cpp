@@ -8,16 +8,15 @@ What is the final value of sum?
 
 #include <iostream>
 
-int
-main (void)
+int main(void)
 {
-  int sum = 0;
+    int sum = 0;
 
-  for (int i = -100; i <= 100; ++i)
+    for (int i = -100; i <= 100; ++i)
     {
-      sum += i;
-      std::cout << sum << '\n';
+        sum += i;
+        std::cout << sum << '\n';
     }
 
-  return 0;
+    return 0;
 }

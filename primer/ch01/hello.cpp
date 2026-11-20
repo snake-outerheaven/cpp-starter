@@ -1,8 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
-int
-main (void)
+int main(void)
 {
-  std::cout << "Hello World!" << std::endl;
-  return EXIT_SUCCESS;
+    std::cout << "Hello World!" << std::endl;
+    return EXIT_SUCCESS;
 }

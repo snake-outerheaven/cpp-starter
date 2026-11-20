@@ -13,97 +13,91 @@ soma de todos os termos.
 #include <string>
 #include <vector>
 
-std::string lower (const std::string &);
+std::string lower(const std::string &);
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
-int
-main (void)
+int main(void)
 {
-  std::vector<long double> v{};
+    std::vector<long double> v{};
 
-  std::string user_input{};
+    std::string user_input{};
 
-  std::stringstream s{};
+    std::stringstream s{};
 
 #ifdef _WIN32
-  SetConsoleCP (CP_UTF8);
-  SetConsoleOutputCP (CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
 #endif
 
-  while (1)
+    while (1)
     {
-      int idx{};
-      long double first{};
-      long double prod_final{ 0 };
-      user_input.clear ();
-      v.clear ();
-      s.clear ();
-      std::cout << "Digite o tamanho do vector desejado: ";
-      std::getline (std::cin, user_input);
+        int idx{};
+        long double first{};
+        long double prod_final{0};
+        user_input.clear();
+        v.clear();
+        s.clear();
+        std::cout << "Digite o tamanho do vector desejado: ";
+        std::getline(std::cin, user_input);
 
-      if (lower (user_input) == "sair")
-        break;
+        if (lower(user_input) == "sair")
+            break;
 
-      s.str (user_input);
-      s.exceptions (std::ios::failbit | std::ios::badbit);
+        s.str(user_input);
+        s.exceptions(std::ios::failbit | std::ios::badbit);
 
-      try
+        try
         {
-          s.clear ();
-          s >> idx;
+            s.clear();
+            s >> idx;
 
-          if (idx <= 0)
-            throw std::invalid_argument ("Não existe vetores com idx <= 0");
+            if (idx <= 0)
+                throw std::invalid_argument("Não existe vetores com idx <= 0");
 
-          v.resize (idx); // faz a préalocação de memória aqui, para facilitar.
+            v.resize(idx); // faz a préalocação de memória aqui, para facilitar.
 
-          std::cout << "Digite o número do índice 0: ";
-          std::getline (std::cin, user_input);
-          s.str (user_input);
-          s.clear ();
-          s >> first;
-          v.at (0) = first;
+            std::cout << "Digite o número do índice 0: ";
+            std::getline(std::cin, user_input);
+            s.str(user_input);
+            s.clear();
+            s >> first;
+            v.at(0) = first;
 
-          prod_final += first;
+            prod_final += first;
 
-          for (auto i = (v.begin () + 1); i < v.end (); i++)
+            for (auto i = (v.begin() + 1); i < v.end(); i++)
             {
-              auto ant = *(
-                  i
-                  - 1); // desreferencia o iterador para obter o valor anterior
-              *i = ant + std::pow (ant, 2);
+                auto ant = *(i - 1); // desreferencia o iterador para obter o valor anterior
+                *i = ant + std::pow(ant, 2);
 
-              prod_final += *i;
+                prod_final += *i;
             }
         }
-      catch (const std::exception &e)
+        catch (const std::exception &e)
         {
-          std::cerr << "Erro crítico em sessão importante do programa: "
-                    << e.what () << '\n';
-          continue;
+            std::cerr << "Erro crítico em sessão importante do programa: " << e.what() << '\n';
+            continue;
         }
 
-      std::cout << "Produto final: " << prod_final << std::endl;
+        std::cout << "Produto final: " << prod_final << std::endl;
 
-      break; // remover, debug
+        break; // remover, debug
     }
 
-  return 0;
+    return 0;
 }
 
-std::string
-lower (const std::string &str)
+std::string lower(const std::string &str)
 {
-  std::string result{};
+    std::string result{};
 
-  for (auto c : str)
+    for (auto c : str)
     {
-      result.push_back (
-          static_cast<char> (std::tolower (static_cast<unsigned char> (c))));
+        result.push_back(static_cast<char>(std::tolower(static_cast<unsigned char>(c))));
     }
 
-  return result;
+    return result;
 }

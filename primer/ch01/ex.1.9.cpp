@@ -2,18 +2,17 @@
 
 #include <iostream>
 
-int
-main (void)
+int main(void)
 {
-  int i, val;
+    int i, val;
 
-  val = 0;
-  i = 50;
+    val = 0;
+    i = 50;
 
-  while (i <= 100)
-    val += i, i++;
+    while (i <= 100)
+        val += i, i++;
 
-  std::cout << "The sum of 50 up to 100 is " << val << "." << std::endl;
+    std::cout << "The sum of 50 up to 100 is " << val << "." << std::endl;
 
-  return 0;
+    return 0;
 }

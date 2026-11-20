@@ -3,19 +3,18 @@
 
 #include <iostream>
 
-int
-main (void)
+int main(void)
 {
-  int v1, v2;
+    int v1, v2;
 
-  v1 = v2 = 0;
+    v1 = v2 = 0;
 
-  std::cout << "Enter 2 integers: ";
-  std::cin >> v1 >> v2;
-  std::cout << "Program read " << v1 << " and " << v2 << '\n';
+    std::cout << "Enter 2 integers: ";
+    std::cin >> v1 >> v2;
+    std::cout << "Program read " << v1 << " and " << v2 << '\n';
 
-  while (v1 <= v2)
-    std::cout << v1 << '\n', v1++;
+    while (v1 <= v2)
+        std::cout << v1 << '\n', v1++;
 
-  return 0;
+    return 0;
 }

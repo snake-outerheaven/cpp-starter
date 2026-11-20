@@ -77,7 +77,7 @@ int main(void)
             inter2 = ((y2 - y1) * (y2 - y1));
 
             interFinal = inter1 + inter2;
-            
+
             r = std::sqrt(interFinal);
 
             std::cout << "A distância euclidiana entre os pontos 1 (x1: " << x1 << " y1: " << y1
